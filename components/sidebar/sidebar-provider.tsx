@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { SideBar } from '.';
+import { usePathname } from 'next/navigation';
 
 type SidebarContextType = {
   open: boolean;
@@ -13,12 +15,15 @@ type SidebarContextType = {
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export const SidebarProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("dashboard");
-
+  const pathName = usePathname();
   return (
     <SidebarContext.Provider value={{ open, setOpen, selected, setSelected }}>
-      <motion.main layout className="flex h-full">
+      <motion.main layout className="flex h-full w-full">
+         {!pathName.includes("/onboarding") && (
+            <SideBar />
+          )}
         {children}
       </motion.main>
     </SidebarContext.Provider>

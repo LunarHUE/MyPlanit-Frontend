@@ -18,13 +18,44 @@ import { ChevronDown, ChevronsRight } from 'lucide-react'
 import Logo from '../ui/logo'
 import { Popover, PopoverContent } from '../ui/popover'
 import { PopoverTrigger } from '@radix-ui/react-popover'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import useWindowSize from '@/hooks/use-window-size'
 
 interface RetractingSidebarProps {
   className?: string
 }
 
+const courses = [
+  {
+    id: "course1",
+    name: "Course 1",
+  },
+  {
+    id: "course2",
+    name: "Course 2",
+  },
+  {
+    id: "course3",
+    name: "Course 3",
+  },
+] as const;
+
 export function SideBar({ className }: RetractingSidebarProps) {
-  const { open } = useSidebarContext();
+  const { open, setOpen } = useSidebarContext();
+  const { width: screenWidth } = useWindowSize();
+  const isMobile = screenWidth < 500;
+
+  useEffect(() => {
+    if (isMobile) {
+      setOpen(false);
+    }
+    if (!isMobile) {
+      setOpen(true);
+    }
+  }, [screenWidth, isMobile, setOpen]);
+
+
   return (
     <motion.nav
       layout
@@ -33,7 +64,7 @@ export function SideBar({ className }: RetractingSidebarProps) {
         className
       )}
       style={{
-        width: open ? '225px' : 'fit-content',
+        width: open ? isMobile ? screenWidth : '225px' : 'fit-content',
       }}
     >
       <div className="mb-3 border-b border-border pb-3">
@@ -47,7 +78,25 @@ export function SideBar({ className }: RetractingSidebarProps) {
                 <PopoverTrigger className="w-full">
                   <CourseSideBarItem />
                 </PopoverTrigger>
-                <PopoverContent>Place content for the popover here.</PopoverContent>
+                <PopoverContent side={`${isMobile ? "bottom": "right"}`}>
+                  <div className="w-full flex justify-center">
+                    <span className="text-sm text-muted-foreground">
+                      You can view all courses{" "}
+                      <Link href={"/courses"} className="text-primary">here.</Link>
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 p-2">
+                    {courses.map((course) => (
+                      <SidebarItem
+                        key={course.id}
+                        id={course.id}
+                        href={`/courses/${course.id}`}
+                      >
+                        {course.name}
+                      </SidebarItem>
+                    ))}
+                  </div>
+                </PopoverContent>
               </Popover>
             )
           }

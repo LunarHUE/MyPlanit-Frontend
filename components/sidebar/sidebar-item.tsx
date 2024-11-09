@@ -8,7 +8,7 @@ import { BookText } from 'lucide-react';
 // Careful what you import from this file, the default import of this file is the React component
 // import { type SidebarItem } from "./sidebar-item";
 export type SidebarItem = {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   id: string;
   href?: string;
   content?: React.ReactNode;
@@ -77,13 +77,15 @@ export default function SidebarItem({
       onClick={() => setSelected(id)}
       className={`relative h-10 w-full  rounded-md transition-colors text-muted-foreground ${selected === id ? "bg-secondary" : "hover:bg-secondary"}`}
     >
-      <Link className="flex items-center h-full w-full" href={`${href}`}>
-        <motion.div
-          layout
-          className={`flex h-full items-center ${!open ? 'w-full justify-center': "w-10 place-content-center"} text-lg`}
-        >
-          {icon}
-        </motion.div>
+      <Link className={`flex items-center h-full w-full ${!icon ? "px-5": "" }`} href={`${href}`}>
+        {icon && (
+          <motion.div
+            layout
+            className={`flex h-full items-center ${!open ? 'w-full justify-center': "w-10 place-content-center"} text-lg`}
+            >
+            {icon}
+          </motion.div>
+        )}
         {open && (
           <motion.span
             layout
