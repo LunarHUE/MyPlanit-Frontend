@@ -14,14 +14,30 @@ import { motion } from 'framer-motion'
 import SidebarItem, { CourseSideBarItem } from './sidebar-item'
 import { sideBarItems, dropDownItems } from './data'
 import DropDownItem from './dropdown-item'
-import { ChevronDown, ChevronsRight } from 'lucide-react'
+import { BookText, ChevronDown, ChevronsRight } from 'lucide-react'
 import Logo from '../ui/logo'
 import { Popover, PopoverContent } from '../ui/popover'
 import { PopoverTrigger } from '@radix-ui/react-popover'
+import Link from 'next/link'
 
 interface RetractingSidebarProps {
   className?: string
 }
+
+const courses = [
+  {
+    id: "course1",
+    name: "Course 1",
+  },
+  {
+    id: "course2",
+    name: "Course 2",
+  },
+  {
+    id: "course3",
+    name: "Course 3",
+  },
+] as const;
 
 export function SideBar({ className }: RetractingSidebarProps) {
   const { open } = useSidebarContext();
@@ -47,7 +63,25 @@ export function SideBar({ className }: RetractingSidebarProps) {
                 <PopoverTrigger className="w-full">
                   <CourseSideBarItem />
                 </PopoverTrigger>
-                <PopoverContent>Place content for the popover here.</PopoverContent>
+                <PopoverContent side="right">
+                  <div className="w-full flex justify-center">
+                    <span className="text-sm text-muted-foreground">
+                      You can view all courses{" "}
+                      <Link href={"/courses"} className="text-primary">here.</Link>
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 p-2">
+                    {courses.map((course) => (
+                      <SidebarItem
+                        key={course.id}
+                        id={course.id}
+                        href={`/courses/${course.id}`}
+                      >
+                        {course.name}
+                      </SidebarItem>
+                    ))}
+                  </div>
+                </PopoverContent>
               </Popover>
             )
           }
