@@ -14,11 +14,13 @@ import { motion } from 'framer-motion'
 import SidebarItem, { CourseSideBarItem } from './sidebar-item'
 import { sideBarItems, dropDownItems } from './data'
 import DropDownItem from './dropdown-item'
-import { BookText, ChevronDown, ChevronsRight } from 'lucide-react'
+import { ChevronDown, ChevronsRight } from 'lucide-react'
 import Logo from '../ui/logo'
 import { Popover, PopoverContent } from '../ui/popover'
 import { PopoverTrigger } from '@radix-ui/react-popover'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import useWindowSize from '@/hooks/use-window-size'
 
 interface RetractingSidebarProps {
   className?: string
@@ -40,7 +42,20 @@ const courses = [
 ] as const;
 
 export function SideBar({ className }: RetractingSidebarProps) {
-  const { open } = useSidebarContext();
+  const { open, setOpen } = useSidebarContext();
+  const { width: screenWidth } = useWindowSize();
+  const isMobile = screenWidth < 500;
+
+  useEffect(() => {
+    if (isMobile) {
+      setOpen(false);
+    }
+    if (!isMobile) {
+      setOpen(true);
+    }
+  }, [screenWidth]);
+
+
   return (
     <motion.nav
       layout
@@ -49,7 +64,7 @@ export function SideBar({ className }: RetractingSidebarProps) {
         className
       )}
       style={{
-        width: open ? '225px' : 'fit-content',
+        width: open ? isMobile ? screenWidth : '225px' : 'fit-content',
       }}
     >
       <div className="mb-3 border-b border-border pb-3">
@@ -63,7 +78,7 @@ export function SideBar({ className }: RetractingSidebarProps) {
                 <PopoverTrigger className="w-full">
                   <CourseSideBarItem />
                 </PopoverTrigger>
-                <PopoverContent side="right">
+                <PopoverContent side={`${isMobile ? "bottom": "right"}`}>
                   <div className="w-full flex justify-center">
                     <span className="text-sm text-muted-foreground">
                       You can view all courses{" "}
