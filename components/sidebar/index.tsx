@@ -53,7 +53,7 @@ export function SideBar({ className }: RetractingSidebarProps) {
     if (!isMobile) {
       setOpen(true);
     }
-  }, [screenWidth]);
+  }, [screenWidth, isMobile, setOpen]);
 
 
   return (
