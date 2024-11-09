@@ -16,9 +16,9 @@ export  const sideBarItems: SidebarItem[] = [
   },
   {
     icon: <Calendar/>,
-    id: "calender",
+    id: "calendar",
     content: <span>Calendar</span>,
-    href: "/calender",
+    href: "/calendar",
   },
   {
     icon: <Inbox/>,
