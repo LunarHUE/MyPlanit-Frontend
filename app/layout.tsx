@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import localFont from "next/font/local";
 import "./globals.css";
+import { SideBar } from '@/components/sidebar';
+import { SidebarProvider } from '@/components/sidebar/sidebar-provider';
+import { ReactQueryProvider } from '@/lib/providers/react-query-provider';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,9 +32,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark w-full h-screen`}
       >
-        <UserProvider>
-          {children}
-        </UserProvider>
+       <ReactQueryProvider>
+          <UserProvider>
+            <SidebarProvider>
+              {children}
+            </SidebarProvider>
+          </UserProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

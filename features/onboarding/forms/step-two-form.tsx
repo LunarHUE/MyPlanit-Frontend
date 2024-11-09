@@ -21,7 +21,11 @@ import { useOnboardingContext } from '../providers/onboarding-provider';
 
 // Define Zod schema for step two
 const StepTwoSchema = z.object({
-  canvasUrl: z.string().url('Invalid URL'),
+  canvasUrl: z.string().min(1, 'URL is required').superRefine((url) => {
+
+    url.replaceAll("/", "")
+    return url
+  }),
   canvasKey: z.string().min(1, 'Key is required'),
 });
 
@@ -40,6 +44,15 @@ export default function StepTwoForm() {
     console.log('Form submitted:', finalData);
   };
 
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let url = e.target.value;
+    url = url.trim();
+    url = url.replace("https://", "");
+    url = url.substring(0, url.indexOf("/"))
+    console.log(url);
+    form.setValue('canvasUrl', url);
+  }
+
   const handleBack = () => {
     setFormData({ ...formData, ...form.getValues() });
     setStep(1);
@@ -57,7 +70,7 @@ export default function StepTwoForm() {
               <FormItem>
                 <FormLabel>Canvas URL</FormLabel>
                 <FormControl>
-                  <Input type="url" {...field} required />
+                  <Input type="text" {...field} onChange={(e) => handleUrlChange(e)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -70,7 +83,7 @@ export default function StepTwoForm() {
               <FormItem>
                 <FormLabel>Canvas Key</FormLabel>
                 <FormControl>
-                  <Input {...field} required />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
