@@ -14,7 +14,7 @@ export default withMiddlewareAuthRequired({
     if (process.env.NODE_ENV === 'development') {
       return res
     }
-
+    
     const session = await getSession(req, res)
 
     if (req.nextUrl.pathname.includes('/api/auth/')) {
