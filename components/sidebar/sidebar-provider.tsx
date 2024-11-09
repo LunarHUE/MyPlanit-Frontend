@@ -18,7 +18,7 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <SidebarContext.Provider value={{ open, setOpen, selected, setSelected }}>
-      <motion.main layout className="flex">
+      <motion.main layout className="flex h-full">
         {children}
       </motion.main>
     </SidebarContext.Provider>

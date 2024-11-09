@@ -77,7 +77,7 @@ export default function SidebarItem({
       onClick={() => setSelected(id)}
       className={`relative h-10 w-full  rounded-md transition-colors text-muted-foreground ${selected === id ? "bg-secondary" : "hover:bg-secondary"}`}
     >
-      <Link className="flex items-center h-full w-full" href={`/${href}`}>
+      <Link className="flex items-center h-full w-full" href={`${href}`}>
         <motion.div
           layout
           className={`flex h-full items-center ${!open ? 'w-full justify-center': "w-10 place-content-center"} text-lg`}

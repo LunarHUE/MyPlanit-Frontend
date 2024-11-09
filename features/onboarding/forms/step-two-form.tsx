@@ -21,10 +21,8 @@ import { useOnboardingContext } from '../providers/onboarding-provider';
 
 // Define Zod schema for step two
 const StepTwoSchema = z.object({
-  canvasUrl: z.string().min(1, 'URL is required').superRefine((url) => {
-
-    url.replaceAll("/", "")
-    return url
+  canvasUrl: z.string().min(1, 'URL is required').refine((val) => val.includes('.'), {
+    message: 'URL must contain a dot',
   }),
   canvasKey: z.string().min(1, 'Key is required'),
 });
@@ -40,16 +38,17 @@ export default function StepTwoForm() {
   });
 
   const onSubmit = (data: StepTwoData) => {
+    setStep(3);
     const finalData = { ...formData, ...data };
-    console.log('Form submitted:', finalData);
+    setFormData(finalData);
   };
 
-  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const validateUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     let url = e.target.value;
     url = url.trim();
     url = url.replace("https://", "");
-    url = url.substring(0, url.indexOf("/"))
-    console.log(url);
+    const index = url.indexOf("/");
+    url = url.substring(0, index > 0 ? index : url.length);
     form.setValue('canvasUrl', url);
   }
 
@@ -70,7 +69,7 @@ export default function StepTwoForm() {
               <FormItem>
                 <FormLabel>Canvas URL</FormLabel>
                 <FormControl>
-                  <Input type="text" {...field} onChange={(e) => handleUrlChange(e)} />
+                  <Input type="text" {...field} onBlur={(e) => validateUrl(e)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

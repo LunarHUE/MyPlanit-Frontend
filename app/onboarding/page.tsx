@@ -8,7 +8,6 @@ export default function OnboardingPage() {
       <OnboardingProvider>
         <OnboardingSteps />
       </OnboardingProvider>
-
     </div>
   )
 }
