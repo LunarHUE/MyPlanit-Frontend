@@ -10,7 +10,7 @@ export default withMiddlewareAuthRequired({
 
   async middleware(req) {
     const res = NextResponse.next()
-
+    if(process.env.NODE_ENV == "development") return res
     const session = await getSession(req, res)
 
     if (req.nextUrl.pathname.includes('/api/auth/')) {
