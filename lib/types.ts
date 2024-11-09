@@ -11,3 +11,12 @@ type ErrorResponse = {
 }
 
 export type APIResponse<T> = SuccessResponse<T> | ErrorResponse
+
+export type Profile = {
+  id: string
+  userId: string
+  firstName: string
+  lastName: string
+  canvasUrl: string
+  canvasToken: string
+}
