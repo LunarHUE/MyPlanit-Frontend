@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SidebarProvider } from '@/components/sidebar/sidebar-provider';
 import { ReactQueryProvider } from '@/lib/providers/react-query-provider';
-import { UserProfileProvider } from '@/lib/providers/userprofile-providers';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,11 +33,9 @@ export default function RootLayout({
       >
        <ReactQueryProvider>
           <UserProvider>
-            <UserProfileProvider>
-              <SidebarProvider>
-                {children}
-              </SidebarProvider>
-            </UserProfileProvider>
+            <SidebarProvider>
+              {children}
+            </SidebarProvider>
           </UserProvider>
         </ReactQueryProvider>
       </body>

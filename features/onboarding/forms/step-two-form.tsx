@@ -40,6 +40,7 @@ export default function StepTwoForm() {
   });
 
   const onSubmit = (data: StepTwoData) => {
+    setStep(3);
     const finalData = { ...formData, ...data };
     console.log('Form submitted:', finalData);
   };
