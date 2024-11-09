@@ -1,12 +1,7 @@
 // Careful what you import here, the default import of this file is the React component
 import { type SidebarItem } from "./sidebar-item";
 import { type DropDownItem } from "./dropdown-item";
-import { BarChart, BookText, Calendar, DollarSign, House, Inbox, Monitor, ShoppingCart, Tags, Users } from 'lucide-react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { BookText, Calendar, House, Inbox } from 'lucide-react';
 
 export  const sideBarItems: SidebarItem[] = [
   {
@@ -18,7 +13,6 @@ export  const sideBarItems: SidebarItem[] = [
   {
     icon: <BookText />,
     id: "courses",
-    href: "/courses",
   },
   {
     icon: <Calendar/>,

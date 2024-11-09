@@ -43,7 +43,7 @@ export function SideBar({ className }: RetractingSidebarProps) {
         {sideBarItems.map((item) => {
           if (item.id == "courses") {
             return (
-              <Popover>
+              <Popover key={item.id}>
                 <PopoverTrigger className="w-full">
                   <CourseSideBarItem />
                 </PopoverTrigger>

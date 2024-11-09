@@ -1,9 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import React, { createContext, useContext, useState, ReactNode, useMemo } from "react";
-import { SideBar } from '.';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type SidebarContextType = {
   open: boolean;
