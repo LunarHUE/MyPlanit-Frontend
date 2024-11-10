@@ -24,7 +24,7 @@ async function getProfile(userId: string): Promise<APIResponse<Profile>> {
   const data: Profile = await res.json()
   return {
     data,
-    status: 'success',
+    success: true,
   }
 }
 

@@ -34,7 +34,7 @@ export default function StepTwoForm() {
 
   const form = useForm<StepTwoData>({
     resolver: zodResolver(StepTwoSchema),
-    defaultValues: formData,
+    defaultValues: formData || { canvasUrl: '', canvasKey: '' },
   });
 
   const onSubmit = (data: StepTwoData) => {

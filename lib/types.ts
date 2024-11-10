@@ -1,11 +1,11 @@
 type SuccessResponse<T> = {
-  status: 'success'
+  success: true
   data: T
   message?: never
 }
 
 type ErrorResponse = {
-  status: 'error'
+  success: false
   message: string
   data: null
 }

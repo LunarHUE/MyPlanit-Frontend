@@ -29,11 +29,14 @@ export default function StepOneForm() {
 
   const form = useForm<StepOneData>({
     resolver: zodResolver(StepOneSchema),
-    defaultValues: formData,
+    defaultValues: formData || {
+      firstName: '',
+      lastName: '',
+    },
   });
 
   const onSubmit = (data: StepOneData) => {
-    setFormData(prev => ({ ...prev, ...data }));
+    setFormData((prev: any) => ({ ...prev, ...data }));
     setStep(2);
   };
 
