@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { cn } from '@/lib/utils'
 
@@ -21,40 +21,27 @@ import { PopoverTrigger } from '@radix-ui/react-popover'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import useWindowSize from '@/hooks/use-window-size'
+import { useRootContext } from '@/lib/providers/root-provider'
 
 interface RetractingSidebarProps {
   className?: string
 }
 
-const courses = [
-  {
-    id: "course1",
-    name: "Course 1",
-  },
-  {
-    id: "course2",
-    name: "Course 2",
-  },
-  {
-    id: "course3",
-    name: "Course 3",
-  },
-] as const;
-
 export function SideBar({ className }: RetractingSidebarProps) {
-  const { open, setOpen } = useSidebarContext();
-  const { width: screenWidth } = useWindowSize();
-  const isMobile = screenWidth < 500;
+  const { open, setOpen } = useSidebarContext()
+  const { width: screenWidth } = useWindowSize()
+  const isMobile = screenWidth < 500
+  const { coursesResponse, coursesLoading } = useRootContext()
+  const courses = coursesResponse?.data || []
 
   useEffect(() => {
     if (isMobile) {
-      setOpen(false);
+      setOpen(false)
     }
     if (!isMobile) {
-      setOpen(true);
+      setOpen(true)
     }
-  }, [screenWidth, isMobile, setOpen]);
-
+  }, [screenWidth, isMobile, setOpen])
 
   return (
     <motion.nav
@@ -64,7 +51,7 @@ export function SideBar({ className }: RetractingSidebarProps) {
         className
       )}
       style={{
-        width: open ? isMobile ? screenWidth : '225px' : 'fit-content',
+        width: open ? (isMobile ? screenWidth : '225px') : 'fit-content',
       }}
     >
       <div className="mb-3 border-b border-border pb-3">
@@ -72,29 +59,34 @@ export function SideBar({ className }: RetractingSidebarProps) {
       </div>
       <div className="space-y-1">
         {sideBarItems.map((item) => {
-          if (item.id == "courses") {
+          if (item.id == 'courses') {
             return (
               <Popover key={item.id}>
                 <PopoverTrigger className="w-full">
                   <CourseSideBarItem />
                 </PopoverTrigger>
-                <PopoverContent side={`${isMobile ? "bottom": "right"}`}>
+                <PopoverContent side={`${isMobile ? 'bottom' : 'right'}`}>
                   <div className="w-full flex justify-center">
                     <span className="text-sm text-muted-foreground">
-                      You can view all courses{" "}
-                      <Link href={"/courses"} className="text-primary">here.</Link>
+                      You can view all courses{' '}
+                      <Link href={'/courses'} className="text-primary">
+                        here.
+                      </Link>
                     </span>
                   </div>
                   <div className="flex flex-col gap-1 p-2">
-                    {courses.map((course) => (
-                      <SidebarItem
-                        key={course.id}
-                        id={course.id}
-                        href={`/courses/${course.id}`}
-                      >
-                        {course.name}
-                      </SidebarItem>
-                    ))}
+                    {coursesLoading && <span>Loading...</span>}
+
+                    {!coursesLoading &&
+                      courses.map((course) => (
+                        <SidebarItem
+                          key={course.id}
+                          id={`${course.id}`}
+                          href={`/courses/${course.id}`}
+                        >
+                          {course.name}
+                        </SidebarItem>
+                      ))}
                   </div>
                 </PopoverContent>
               </Popover>

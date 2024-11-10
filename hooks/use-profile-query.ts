@@ -1,11 +1,7 @@
 'use client'
 
 import type { APIResponse } from '@/lib/types'
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 type Profile = {
   id: string

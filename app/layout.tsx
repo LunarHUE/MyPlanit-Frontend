@@ -5,6 +5,7 @@ import "./globals.css";
 import { SidebarProvider } from '@/components/sidebar/sidebar-provider';
 import { ReactQueryProvider } from '@/lib/providers/react-query-provider';
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import RootProvider from '@/lib/providers/root-provider';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,12 +33,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark w-full h-screen`}
       >
-       <ReactQueryProvider>
-          <UserProvider>
-            <SidebarProvider>
-              <NuqsAdapter>{children}</NuqsAdapter>
-            </SidebarProvider>
-          </UserProvider>
+        <ReactQueryProvider>
+          <RootProvider>
+            <UserProvider>
+              <SidebarProvider>
+                <NuqsAdapter>{children}</NuqsAdapter>
+              </SidebarProvider>
+            </UserProvider>
+          </RootProvider>
         </ReactQueryProvider>
       </body>
     </html>
