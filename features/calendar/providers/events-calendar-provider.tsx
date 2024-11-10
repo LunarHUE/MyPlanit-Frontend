@@ -9,6 +9,7 @@ import BarLoader from '@/components/hover/bar-loader'
 
 interface EventCalendarContextType {
   events: CalendarEvent[]
+  setEvents: React.Dispatch<React.SetStateAction<CalendarEvent[]>>
   selectedDate: Date | undefined
   setSelectedDate: React.Dispatch<React.SetStateAction<Date | undefined>>
 }
@@ -61,7 +62,7 @@ export const EventsCalendarProvider = ({
 
   return (
     <EventCalendarContext.Provider
-      value={{ events, selectedDate, setSelectedDate }}
+      value={{ events, selectedDate, setSelectedDate, setEvents }}
     >
       {children}
     </EventCalendarContext.Provider>

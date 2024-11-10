@@ -60,7 +60,10 @@ export default function CalendarSideBar() {
             const startMinutes = start.getHours() * 60 + start.getMinutes() - 60
             const startTime = format(start, 'h:mma')
             const endTime = format(end, 'h:mma')
-            const duration = (end.getTime() - start.getTime()) / 60000
+            const duration = Math.max(
+              (end.getTime() - start.getTime()) / 60000,
+              60 * 1000
+            )
             console.log(start, end, duration)
             return (
               <div
