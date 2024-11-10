@@ -27,11 +27,7 @@ export default withMiddlewareAuthRequired({
       )
     }
 
-    const user: UserProfile = session.user
-
-    const profileRes = await fetch(
-      `https://api.myplanit.app/profile/`
-    )
+    const profileRes = await fetch(`https://api.myplanit.app/profile/`)
 
     const { data: profile } = await profileRes.json()
 
