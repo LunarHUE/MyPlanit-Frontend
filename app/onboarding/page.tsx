@@ -6,11 +6,11 @@ import BarLoader from '@/components/hover/bar-loader'
 export default function OnboardingPage() {
   return (
     <div className="container flex h-full items-center justify-center">
-      <OnboardingProvider>
-        <Suspense fallback={<BarLoader />}>
+      <Suspense fallback={<BarLoader />}>
+        <OnboardingProvider>
           <OnboardingSteps />
-        </Suspense>
-      </OnboardingProvider>
+        </OnboardingProvider>
+      </Suspense>
     </div>
   )
 }
