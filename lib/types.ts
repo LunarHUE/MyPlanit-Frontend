@@ -22,11 +22,16 @@ export type Profile = {
 }
 
 export type CalendarEvent = {
-  id: string
-  title: string
+  assignmentID: number
+  courseID: number
+  dateCreated: string
+  dateModified: string
   description: string
-  start: Date
-  end: Date
+  endDateTime: string
+  id: number
+  profileId: string
+  startDateTime: string
+  title: string
 }
 
 export type Course = {

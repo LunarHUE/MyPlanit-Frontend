@@ -18,7 +18,7 @@ export default async function SendAuthedRequest<T>(
 ): Promise<APIResponse<T>> {
   const session = await getSession()
   const idToken = session!.idToken
-  console.log(idToken)
+  // console.log(idToken)
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: method,
     headers: {
@@ -27,7 +27,7 @@ export default async function SendAuthedRequest<T>(
     },
     body: data ? JSON.stringify(data) : null,
   })
-  console.log(res)
+  // console.log(res)
 
   if (!res.ok) {
     return {
