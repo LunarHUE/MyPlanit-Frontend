@@ -1,22 +1,33 @@
 "use client";
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useOnboardingContext } from '../providers/onboarding-provider';
 import SteppedProgress from '@/components/hover/stepped-progress';
 import StepOneForm from '../forms/step-one-form';
 import StepTwoForm from '../forms/step-two-form';
 import { motion } from 'framer-motion';
+import SendAuthedRequest from '@/app/_actions/send-authed-api';
+import type { Profile } from '@/lib/types';
+import { useRouter } from 'next/navigation';
+import BarLoader from '@/components/hover/bar-loader';
 
 export default function OnboardingSteps() {
-  const { step } = useOnboardingContext();
+  const { step, formData } = useOnboardingContext();
+  const router = useRouter();
 
   useEffect(() => {
-    if (step === 3) {
-      //
-      console.log('Onboarding complete');
-    }
+    const postData = async () => {
+      if (step === 3) {
+        const res = await SendAuthedRequest<Profile>(`${process.env.NEXT_PUBLIC_API_URL}/profile`, "POST", formData);
+        if (res.success) {
+          router.push('/');
+          return;
+        }
+        console.log(res)
+      }
+    };
+    postData();
   }, [step])
-
 
   return (
     <div className="bg-card border-2 border-border flex flex-col w-[500px] px-5 py-3 h-[450px] rounded-xl gap-3">
@@ -34,9 +45,10 @@ export default function OnboardingSteps() {
           <StepTwoForm />
         )}
         {step === 3 && (
-          <motion.div initial={{y: 12, opacity: 0}} animate={{y: 0, opacity: 1}} className="flex flex-col h-[60%] items-center w-full justify-center">
+          <motion.div initial={{y: 12, opacity: 0}} animate={{y: 0, opacity: 1}} className="flex flex-col h-[60%] items-center w-full justify-center gap-2">
             <h1 className="text-xl font-bold">Onboarding Complete!</h1>
-            <p className="text-center">You will be redirected to the home page shortly</p>
+            <p className="text-center">You are being redirected.</p>
+            <BarLoader />
           </motion.div>
         )}
 

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { SidebarProvider } from '@/components/sidebar/sidebar-provider';
 import { ReactQueryProvider } from '@/lib/providers/react-query-provider';
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,7 +35,7 @@ export default function RootLayout({
        <ReactQueryProvider>
           <UserProvider>
             <SidebarProvider>
-              {children}
+              <NuqsAdapter>{children}</NuqsAdapter>
             </SidebarProvider>
           </UserProvider>
         </ReactQueryProvider>

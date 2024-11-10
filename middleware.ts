@@ -14,7 +14,7 @@ export default withMiddlewareAuthRequired({
     if (process.env.NODE_ENV === 'development') {
       return res
     }
-    
+
     const session = await getSession(req, res)
 
     if (req.nextUrl.pathname.includes('/api/auth/')) {
@@ -30,7 +30,7 @@ export default withMiddlewareAuthRequired({
     const user: UserProfile = session.user
 
     const profileRes = await fetch(
-      `https://api.myplanit.app/profile/${user.sub}/`
+      `https://api.myplanit.app/profile/`
     )
 
     const { data: profile } = await profileRes.json()
