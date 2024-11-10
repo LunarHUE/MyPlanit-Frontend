@@ -10,6 +10,7 @@ import SendAuthedRequest from '@/app/_actions/send-authed-api'
 import type { Profile } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 import BarLoader from '@/components/hover/bar-loader'
+import { revalidatePath } from 'next/cache'
 
 export default function OnboardingSteps() {
   const { step, formData, setFormData } = useOnboardingContext()
@@ -26,7 +27,7 @@ export default function OnboardingSteps() {
         // console.log(data)
         const res = await SendAuthedRequest<Profile>(`/profile`, 'POST', data)
         if (res.success) {
-          router.push('/')
+          window.location.href = '/'
           return
         }
         console.log(res)

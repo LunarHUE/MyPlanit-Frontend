@@ -27,21 +27,21 @@ export default function GenerateScheduleDialog() {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState<string>('')
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const eventsData = await SendAuthedRequest<CalendarEvent[]>(
-        '/generate/event',
-        'POST'
-      )
-      console.log(eventsData)
-      if (eventsData.success) {
-        // console.log(eventsData.data)
-        // setEvents(eventsData.data)
-        // setLoading(false)
-        window.location.reload()
-      }
+  const fetchEvents = async () => {
+    const eventsData = await SendAuthedRequest<CalendarEvent[]>(
+      '/generate/event',
+      'POST'
+    )
+    console.log(eventsData)
+    if (eventsData.success) {
+      // console.log(eventsData.data)
+      // setEvents(eventsData.data)
+      // setLoading(false)
+      window.location.reload()
     }
-    fetchEvents()
+  }
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setMessage(messages.shift() ?? 'Almost Done...')
     }, 7500)
@@ -59,7 +59,7 @@ export default function GenerateScheduleDialog() {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button>Generate AI Schedule</Button>
+        <Button onClick={() => fetchEvents()}>Generate AI Schedule</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

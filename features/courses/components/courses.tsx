@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useRootContext } from '@/lib/providers/root-provider'
+import Link from 'next/link'
 
 export function Courses({ past }: { past?: boolean }) {
   const { coursesResponse, coursesLoading } = useRootContext()
@@ -39,7 +40,9 @@ export function Courses({ past }: { past?: boolean }) {
       <TableBody className="w-full">
         {courses.map((course) => (
           <TableRow key={course.id} className="w-full grid-col-4">
-            <TableCell>{course.name}</TableCell>
+            <TableCell>
+              <Link href={`/courses/${course.id}`}>{course.name}</Link>
+            </TableCell>
             <TableCell>{course.end_at}</TableCell>
             <TableCell className="capitalize">
               {course.enrollments[0].type}

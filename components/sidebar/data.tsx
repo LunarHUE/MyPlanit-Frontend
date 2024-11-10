@@ -33,11 +33,22 @@ export const dropDownItems: DropDownItem[] = [
   {
     id: 'delete',
     action: () => {
-      SendAuthedRequest('/event', 'DELETE').then(() => {
-        SendAuthedRequest('/profile', 'DELETE').then(() => {
-          window.location.href = '/api/auth/logout'
+      console.log('delete')
+      SendAuthedRequest('/event', 'DELETE')
+        .then((res) => {
+          console.log(res)
+          SendAuthedRequest('/profile', 'DELETE')
+            .then((res) => {
+              console.log(res)
+              window.location.href = '/api/auth/logout'
+            })
+            .catch((err) => {
+              console.log(err)
+            })
         })
-      })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     content: <span>Delete Profile</span>,
   },
