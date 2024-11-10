@@ -37,7 +37,7 @@ export default function CourseDetail({ courseId }: { courseId: string }) {
     )
   }
 
-const assignments = assignmentData?.data
+  const assignments = assignmentData?.data
 
   return (
     <div className=" mx-auto p-6">
@@ -54,7 +54,7 @@ const assignments = assignmentData?.data
       </div>
 
       {/* Assignments List */}
-      <div className="overflow-y-auto h-[30rem]">
+      <div className="overflow-y-auto h-[60vh]">
         <h2 className="text-2xl font-bold mb-4">Assignments</h2>
         {assignments && assignments.length > 0 ? (
           <ul className="space-y-4">
