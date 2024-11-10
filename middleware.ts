@@ -29,6 +29,12 @@ export default withMiddlewareAuthRequired({
 
     const profileRes = await fetch(`https://api.myplanit.app/profile/`)
 
+    if (!profileRes.ok) {
+      return NextResponse.redirect(
+        `${process.env.AUTH0_BASE_URL}/api/auth/login`
+      )
+    }
+
     const { data: profile } = await profileRes.json()
 
     if (!profile && !req.nextUrl.pathname.includes('/onboarding')) {
