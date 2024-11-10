@@ -4,8 +4,8 @@ import { OnboardingProvider } from '@/features/onboarding/providers/onboarding-p
 import { Suspense } from 'react'
 import BarLoader from '@/components/hover/bar-loader'
 export default function OnboardingPage() {
-  return (
-    <div className="container flex h-full items-center justify-center">
+return (
+    <div className="flex w-full h-full items-center justify-center">
       <Suspense fallback={<BarLoader />}>
         <OnboardingProvider>
           <OnboardingSteps />

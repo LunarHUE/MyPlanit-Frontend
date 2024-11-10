@@ -1,42 +1,41 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { useSidebarContext } from './sidebar-provider';
-import { BookText } from 'lucide-react';
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { useSidebarContext } from './sidebar-provider'
+import { BookText } from 'lucide-react'
 
 // Careful what you import from this file, the default import of this file is the React component
 // import { type SidebarItem } from "./sidebar-item";
 export type SidebarItem = {
-  icon?: React.ReactNode;
-  id: string;
-  href?: string;
-  content?: React.ReactNode;
-  notifs?: number;
+  icon?: React.ReactNode
+  id: string
+  href?: string
+  content?: React.ReactNode
+  notifs?: number
 }
 
-
-interface SidebarItemProps extends Omit<SidebarItem, "content"> {
-  children: React.ReactNode;
+interface SidebarItemProps extends Omit<SidebarItem, 'content'> {
+  children: React.ReactNode
 }
 
 export function CourseSideBarItem() {
-  const {
-    selected,
-    setSelected,
-    open,
-  } = useSidebarContext();
+  const { selected, setSelected, open } = useSidebarContext()
 
   return (
     <motion.div
       layout
-      onClick={() => setSelected("courses")}
-      className={`relative h-10 w-full  rounded-md transition-colors text-muted-foreground ${selected === "course" ? "bg-secondary" : "hover:bg-secondary"}`}
+      onClick={() => setSelected('courses')}
+      className={`relative h-10 w-full  rounded-md transition-colors text-muted-foreground ${
+        selected === 'course' ? 'bg-secondary' : 'hover:bg-secondary'
+      }`}
     >
       <div className="flex items-center h-full w-full">
         <motion.div
           layout
-          className={`flex h-full items-center ${!open ? 'w-full justify-center': "w-10 place-content-center"} text-lg`}
+          className={`flex h-full items-center ${
+            !open ? 'w-full justify-center' : 'w-10 place-content-center'
+          } text-lg`}
         >
           <BookText />
         </motion.div>
@@ -53,7 +52,7 @@ export function CourseSideBarItem() {
         )}
       </div>
     </motion.div>
-  );
+  )
 }
 
 // import SidebarItem from "./sidebar-item";
@@ -63,26 +62,28 @@ export default function SidebarItem({
   href,
   children,
   notifs,
-}: SidebarItemProps){
-
-  const {
-    selected,
-    setSelected,
-    open,
-  } = useSidebarContext();
+}: SidebarItemProps) {
+  const { selected, setSelected, open } = useSidebarContext()
 
   return (
     <motion.div
       layout
       onClick={() => setSelected(id)}
-      className={`relative h-10 w-full  rounded-md transition-colors text-muted-foreground ${selected === id ? "bg-secondary" : "hover:bg-secondary"}`}
+      className={`relative h-10 w-full  rounded-md transition-colors text-muted-foreground ${
+        selected === id ? 'bg-secondary' : 'hover:bg-secondary'
+      }`}
     >
-      <Link className={`flex items-center h-full w-full ${!icon ? "px-5": "" }`} href={`${href}`}>
+      <Link
+        className={`flex items-center h-full w-full ${!icon ? 'px-5' : ''}`}
+        href={`${href}`}
+      >
         {icon && (
           <motion.div
             layout
-            className={`flex h-full items-center ${!open ? 'w-full justify-center': "w-10 place-content-center"} text-lg`}
-            >
+            className={`flex h-full items-center ${
+              !open ? 'w-full justify-center' : 'w-10 place-content-center'
+            } text-lg`}
+          >
             {icon}
           </motion.div>
         )}
@@ -104,7 +105,7 @@ export default function SidebarItem({
               opacity: 1,
               scale: 1,
             }}
-            style={{ y: "-50%" }}
+            style={{ y: '-50%' }}
             transition={{ delay: 0.5 }}
             className="absolute right-2 top-1/2 size-4 rounded bg-indigo-500 text-xs text-foreground flex justify-center"
           >
@@ -113,5 +114,5 @@ export default function SidebarItem({
         )}
       </Link>
     </motion.div>
-  );
-};
+  )
+}

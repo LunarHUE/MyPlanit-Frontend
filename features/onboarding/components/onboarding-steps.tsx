@@ -18,7 +18,7 @@ export default function OnboardingSteps() {
   useEffect(() => {
     const postData = async () => {
       if (step === 3) {
-        const res = await SendAuthedRequest<Profile>(`${process.env.NEXT_PUBLIC_API_URL}/profile`, "POST", formData);
+        const res = await SendAuthedRequest<Profile>(`/profile`, "POST", formData);
         if (res.success) {
           router.push('/');
           return;

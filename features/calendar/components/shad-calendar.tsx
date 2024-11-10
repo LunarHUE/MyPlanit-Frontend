@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { useEventCalendarContext } from '../providers/events-calendar-provider'
 import { Badge } from '@/components/ui/badge'
 import useWindowSize from '@/hooks/use-window-size'
+import { useQueryState } from 'nuqs'
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -22,7 +23,7 @@ function Calendar({
   const { width: screenWidth } = useWindowSize();
   const isMediumLg = screenWidth < 1100;
   const isSmall = screenWidth < 600;
-
+  const [eventId, setEventId] = useQueryState("eventId");
   return (
     <DayPicker
       fixedWeeks
@@ -67,10 +68,10 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <ChevronLeft {...props} className="h-4 w-4" />,
+        IconRight: ({ ...props }) => <ChevronRight {...props} className="h-4 w-4" />,
         DayContent: ({...props }) => (
-          <div className="flex h-[calc(65vh/6)] lg:h-[150px] w-[calc(35vw/7)] md:w-[calc(45vw/7)] lg:w-[calc(70vw/7)]">
+          <div className="flex wh-[calc(65vh/6)] h-[calc(100vh/6)] w-[calc(35vw/7)] md:w-[calc(45vw/7)] lg:w-[calc(70vw/7)]">
             <div className="flex flex-col w-full h-full gap-3">
               <div className="text-sm font-medium text-start">
                 {props.date.getDate()}
@@ -84,12 +85,13 @@ function Calendar({
                     .map((event) => {
                       const durationMinutes = (event.end.getTime() - event.start.getTime()) / (1000 * 60);
                       const badgeHeight = Math.max(12, durationMinutes * 0.5);
-                      console.log("badgeHeight", badgeHeight)
                       return (
                         <Badge key={event.title} variant={"destructive"} className={`w-full`}
                           style={{
                             minHeight: `${badgeHeight}px`,
-                        }}>
+                          }}
+                          onClick={() => setEventId(event.id)}
+                        >
                           {(!isMediumLg && screenWidth != 0) && (
                             <p className="truncate text-nowrap">
                               {event.title}
